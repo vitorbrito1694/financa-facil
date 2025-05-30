@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum PaymentMethodType {
+  CREDIT_CARD
+  DEBIT_CARD
+  PIX
+  CASH
+}
+
+enum TransactionFrequency {
+  FIXED
+  RECORRENT
+  POSSIBLE
+}
+
+// User model for authentication and profile
+model User {
+  id             String          @id @default(uuid())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  email          String          @unique
+  name           String?
+  role           Role            @default(USER)
+  accounts       Account[]
+  transactions   Transaction[]
+  categories     Category[]
+  paymentMethods PaymentMethod[]
+}
+
+// Account model for different financial accounts
+model Account {
+  id           String        @id @default(uuid())
+  name         String
+  type         String // e.g., "checking", "savings", "credit"
+  balance      Decimal       @db.Money
+  currency     String        @default("BRL")
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([userId])
+}
+
+// Category model for transaction categorization
+model Category {
+  id           String        @id @default(uuid())
+  name         String
+  type         String // "income" or "expense"
+  color        String?
+  icon         String?
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([name, userId])
+  @@index([userId])
+}
+
+// PaymentMethod model for different payment methods
+model PaymentMethod {
+  id           String            @id @default(uuid())
+  name         String
+  type         PaymentMethodType @default(CREDIT_CARD)
+  description  String?
+  userId       String
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@unique([name, userId])
+  @@index([userId])
+}
+
+// Transaction model for financial transactions
+model Transaction {
+  id              String               @id @default(uuid())
+  amount          Decimal              @db.Money
+  description     String?
+  date            DateTime
+  type            TransactionType      @default(EXPENSE)
+  frenquecy       TransactionFrequency @default(RECORRENT)
+  accountId       String
+  account         Account              @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  categoryId      String
+  category        Category             @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  paymentMethodId String?
+  paymentMethod   PaymentMethod?       @relation(fields: [paymentMethodId], references: [id])
+  userId          String
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  @@index([accountId])
+  @@index([categoryId])
+  @@index([paymentMethodId])
+  @@index([userId])
+  @@index([date])
+}
