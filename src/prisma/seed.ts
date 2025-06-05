@@ -14,13 +14,13 @@ async function main() {
   await prisma.paymentMethod.createMany({
     data: [
       {
-        name: "BTG",
+        name: "Btg",
         description: "Cartão de Crédito BTG",
         type: "CREDIT_CARD",
         userId: newUser[0].id,
       },
       {
-        name: "ITAÚ",
+        name: "Itaú",
         description: "Cartão de Crédito Itaú",
         type: "CREDIT_CARD",
         userId: newUser[0].id,
@@ -34,6 +34,70 @@ async function main() {
         name: "Pix",
         type: "PIX",
         userId: newUser[0].id,
+      },
+    ],
+    skipDuplicates: true,
+  });
+
+  await prisma.category.createMany({
+    data: [
+      {
+        name: "Alimentação",
+        type: "EXPENSE",
+        userId: newUser[0].id,
+      },
+      {
+        name: "Transporte",
+        type: "EXPENSE",
+        userId: newUser[0].id,
+      },
+      {
+        name: "Saúde",
+        type: "EXPENSE",
+        userId: newUser[0].id,
+      },
+      {
+        name: "Outros",
+        type: "EXPENSE",
+        userId: newUser[0].id,
+      },
+      {
+        name: "Salário",
+        type: "INCOME",
+        userId: newUser[0].id,
+      },
+      {
+        name: "Dev",
+        type: "INCOME",
+        userId: newUser[0].id,
+      },
+      {
+        name: "PLR/Férias",
+        type: "INCOME",
+        userId: newUser[0].id,
+      },
+      {
+        name: "Outras",
+        type: "INCOME",
+        userId: newUser[0].id,
+      },
+    ],
+    skipDuplicates: true,
+  });
+
+  await prisma.account.createMany({
+    data: [
+      {
+        name: "Carteira",
+        type: "CASH",
+        userId: newUser[0].id,
+        balance: 0,
+      },
+      {
+        name: "Conta Poupança",
+        type: "SAVINGS_ACCOUNT",
+        userId: newUser[0].id,
+        balance: 0,
       },
     ],
     skipDuplicates: true,

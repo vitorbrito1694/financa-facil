@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start --port 1241",
     "lint": "next lint",
-    "seed": "node src/prisma/seed.js",
+    "seed": "tsx src/prisma/seed.ts",
     "prisma:generate": "prisma generate --schema=./src/prisma/schema.prisma",
     "prisma:migrate": "prisma migrate dev --schema=./src/prisma/schema.prisma",
     "prisma:reset": "prisma migrate reset --schema=./src/prisma/schema.prisma",
@@ -15,7 +15,7 @@
     "prisma:pull": "prisma db pull --schema=./src/prisma/schema.prisma"
   },
   "dependencies": {
-    "@prisma/client": "^6.8.2",
+    "@prisma/client": "^6.9.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
@@ -41,7 +41,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "postcss": "^8",
-    "prisma": "^6.8.2",
+    "prisma": "^6.9.0",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
