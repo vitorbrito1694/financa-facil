@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start --port 1241",
     "lint": "next lint",
-    "seed": "node prisma/seed.js"
+    "seed": "node src/prisma/seed.js",
+    "prisma:generate": "prisma generate --schema=./src/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=./src/prisma/schema.prisma",
+    "prisma:reset": "prisma migrate reset --schema=./src/prisma/schema.prisma",
+    "prisma:studio": "prisma studio --schema=./src/prisma/schema.prisma",
+    "prisma:pull": "prisma db pull --schema=./src/prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",

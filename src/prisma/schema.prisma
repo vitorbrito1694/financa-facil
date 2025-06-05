@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id             String          @id @default(uuid())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  email          String          @unique
+  name           String?
+  role           Role            @default(USER)
+  accounts       Account[]
+  categories     Category[]
+  paymentMethods PaymentMethod[]
+  transactions   Transaction[]
+}
+
+model Account {
+  id           String        @id @default(uuid())
+  name         String
+  type         String
+  balance      Decimal       @db.Money
+  currency     String        @default("BRL")
+  userId       String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@index([userId])
+}
+
+model Category {
+  id           String        @id @default(uuid())
+  name         String
+  type         String
+  color        String?
+  icon         String?
+  userId       String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@unique([name, userId])
+  @@index([userId])
+}
+
+model PaymentMethod {
+  id           String            @id @default(uuid())
+  name         String
+  description  String?
+  userId       String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  type         PaymentMethodType @default(CREDIT_CARD)
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@unique([name, userId])
+  @@index([userId])
+}
+
+model Transaction {
+  id              String               @id @default(uuid())
+  amount          Decimal              @db.Money
+  description     String?
+  date            DateTime
+  accountId       String
+  categoryId      String
+  paymentMethodId String?
+  userId          String
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  frenquecy       TransactionFrequency @default(RECORRENT)
+  type            TransactionType      @default(EXPENSE)
+  account         Account              @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  category        Category             @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  paymentMethod   PaymentMethod?       @relation(fields: [paymentMethodId], references: [id])
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([accountId])
+  @@index([categoryId])
+  @@index([paymentMethodId])
+  @@index([userId])
+  @@index([date])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum PaymentMethodType {
+  CREDIT_CARD
+  DEBIT_CARD
+  PIX
+  CASH
+}
+
+enum TransactionFrequency {
+  FIXED
+  RECORRENT
+  POSSIBLE
+}
