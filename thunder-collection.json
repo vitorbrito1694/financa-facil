@@ -1,0 +1,122 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "financa-facil",
+    "collectionId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+    "dateExported": "2025-06-11T18:29:49.343Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "d2820e59-e381-4964-88e9-dd6b9ecb1857",
+            "colId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+            "containerId": "",
+            "name": "UNIQUE /users",
+            "url": "http://localhost:1239/api/v1/users",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2025-06-11T17:38:02.881Z",
+            "modified": "2025-06-11T18:03:33.906Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Matheus Marins\",\n  \"email\": \"mmarinsdesign@gmail.com\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "135b92ee-6034-4bf5-92d5-78dba16ca088",
+            "colId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+            "containerId": "",
+            "name": "ALL /users",
+            "url": "http://localhost:1239/api/v1/users",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2025-06-11T17:38:02.882Z",
+            "modified": "2025-06-11T17:38:02.882Z",
+            "headers": []
+        },
+        {
+            "_id": "8e97a0d4-587c-4491-939e-78cbae5e85a9",
+            "colId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+            "containerId": "",
+            "name": "ALL /payment-methods",
+            "url": "http://localhost:1239/api/v1/payment-methods",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2025-06-11T17:38:02.883Z",
+            "modified": "2025-06-11T17:38:02.883Z",
+            "headers": []
+        },
+        {
+            "_id": "9d9ac31f-ef52-4ae4-a505-6ee4f7ebf7a1",
+            "colId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+            "containerId": "",
+            "name": "ALL /accounts",
+            "url": "http://localhost:1239/api/v1/accounts",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2025-06-11T17:38:32.619Z",
+            "modified": "2025-06-11T17:38:45.775Z",
+            "headers": []
+        },
+        {
+            "_id": "d3b560c1-8671-4183-a78f-47db597ce9bf",
+            "colId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+            "containerId": "",
+            "name": "UNIQUE /payment-methods",
+            "url": "http://localhost:1239/api/v1/payment-methods",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2025-06-11T18:17:30.496Z",
+            "modified": "2025-06-11T18:19:46.943Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"C6\",\n  \"description\": \"Cartão de Crédito C6\",\n  \"type\": \"CREDIT_CARD\",\n  \"userId\": \"d0d8894c-4f3c-4b14-b5c6-426d2ae4e820\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "4865e9d3-cc62-4151-b6c9-88f0b5535433",
+            "colId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+            "containerId": "",
+            "name": "UNIQUE /payment-methods/id",
+            "url": "http://localhost:1239/api/v1/payment-methods/fcc41b12-6253-4b94-a5a8-9f33c3c8f929",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2025-06-11T18:22:33.287Z",
+            "modified": "2025-06-11T18:26:24.579Z",
+            "headers": []
+        },
+        {
+            "_id": "e68baf90-2c65-4595-820d-d3fc9283b7fd",
+            "colId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+            "containerId": "",
+            "name": "UNIQUE /payment-methods/id",
+            "url": "http://localhost:1239/api/v1/payment-methods/fcc41b12-6253-4b94-a5a8-9f33c3c8f929",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2025-06-11T18:26:44.259Z",
+            "modified": "2025-06-11T18:27:24.583Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"C6\",\n  \"description\": \"Cartão de Crédito C6 Alterado\",\n  \"type\": \"CREDIT_CARD\",\n  \"userId\": \"d0d8894c-4f3c-4b14-b5c6-426d2ae4e820\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "177af36e-b610-4e8e-83ef-2e6f659ada6d",
+            "colId": "0e27daff-8d60-4e51-b53c-b7bc1d307a9d",
+            "containerId": "",
+            "name": "UNIQUE /payment-methods/id",
+            "url": "http://localhost:1239/api/v1/payment-methods/fcc41b12-6253-4b94-a5a8-9f33c3c8f929",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2025-06-11T18:27:46.542Z",
+            "modified": "2025-06-11T18:27:53.620Z",
+            "headers": []
+        }
+    ],
+    "ref": "7x8kQW4l-Y3Rt9ASb8l0hZ1UJ1ChO2yWb5qpsEA-44ptYDDau5kroroBsMPSUm7KJSsooiICiEZcW5ziupsR4A"
+}
