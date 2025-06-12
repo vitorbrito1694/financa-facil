@@ -12,7 +12,8 @@
     "prisma:migrate": "prisma migrate dev --schema=./src/prisma/schema.prisma",
     "prisma:reset": "prisma migrate reset --schema=./src/prisma/schema.prisma",
     "prisma:studio": "prisma studio --schema=./src/prisma/schema.prisma",
-    "prisma:pull": "prisma db pull --schema=./src/prisma/schema.prisma"
+    "prisma:pull": "prisma db pull --schema=./src/prisma/schema.prisma",
+    "postinstall": "prisma generate --schema=./src/prisma/schema.prisma"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
