@@ -3,13 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { createClientForServer } from "@/lib/supabase/server";
+import { createClientForServer } from "@/utils/supabase/server";
 
 const signInWith = (provider: "google") => async () => {
   console.log(`logando com ${provider}`);
   const supabase = await createClientForServer();
 
-  const authCallbackUrl = `${process.env.NEXT_PUBLIC_URL}/api/auth/callback`;
+  const authCallbackUrl = `${process.env.NEXT_PUBLIC_URL}/auth/callback`;
 
   console.log(authCallbackUrl);
 
@@ -33,11 +33,9 @@ const signInWith = (provider: "google") => async () => {
 };
 export const signInWithGoogle = signInWith("google");
 
-export async function login(formData: FormData) {
+export async function emailLogin(formData: FormData) {
   const supabase = await createClientForServer();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
@@ -46,18 +44,16 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect("/error");
+    redirect("/login?message=Could not log in with email and password");
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function signup(formData: FormData) {
   const supabase = await createClientForServer();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
@@ -66,9 +62,9 @@ export async function signup(formData: FormData) {
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
-    redirect("/error");
+    redirect("/signup?message=Could not sign up with email and password");
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/dashboard");
 }

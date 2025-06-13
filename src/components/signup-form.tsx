@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { signup } from "@/utils/supabase/client-actions";
 
 export function SignUpForm({
   className,
@@ -32,6 +33,8 @@ export function SignUpForm({
     formData.append("last-name", data.last_name);
     formData.append("email", data.email);
     formData.append("password", data.password);
+
+    signup(formData);
   };
 
   return (

@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signInWithGoogle } from "@/lib/supabase/actions";
+import { emailLogin, signInWithGoogle } from "@/utils/supabase/client-actions";
 
 export function LoginForm({
   className,
@@ -30,7 +30,9 @@ export function LoginForm({
     const formData = new FormData();
 
     formData.append("email", data.email);
-    formData.append("name", data.password);
+    formData.append("password", data.password);
+
+    emailLogin(formData);
   };
 
   return (

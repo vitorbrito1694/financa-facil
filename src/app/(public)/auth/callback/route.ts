@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClientForServer } from "@/lib/supabase/server";
+import { createClientForServer } from "@/utils/supabase/server";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -36,5 +36,7 @@ export async function GET(request: Request) {
   }
 
   // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  return NextResponse.redirect(
+    `${origin}/login?message=Error during authentication callback`
+  );
 }
