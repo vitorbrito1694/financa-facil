@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { signup } from "@/utils/supabase/client-actions";
+import { useAuth } from "@/contexts/auth-context";
 
 export function SignUpForm({
   className,
@@ -25,6 +25,8 @@ export function SignUpForm({
     watch,
     formState: { errors },
   } = useForm();
+
+  const { signup } = useAuth();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const formData = new FormData();

@@ -16,6 +16,7 @@ import {
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "./logo";
+import { useAuth } from "@/contexts/auth-context";
 
 const data = {
   navMain: [
@@ -52,6 +53,9 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const { user } = useAuth();
+
+  console.log(user);
 
   return (
     <Sidebar {...props}>
@@ -83,13 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarRail />
-      <SidebarFooter>
-        {/* {userData && <NavUser user={userData} />} */}
-        <div onClick={() => console.log("Falta pegar os dados de usuario")}>
-          Usuario
-        </div>
-        {/* <div onClick={() => signOut()}>Sair</div> */}
-      </SidebarFooter>
+      <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
     </Sidebar>
   );
 }

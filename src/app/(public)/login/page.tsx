@@ -1,11 +1,26 @@
+"use client";
+
+import { useAuth } from "@/contexts/auth-context";
 import { LoginForm } from "../../../components/login-form";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  return (
-    <div className="flex min-h-[calc(60vh)] md:min-h-[calc(60vh)] w-full items-center justify-center p-4 md:p-10">
-      <div className="w-full max-w-sm">
-        <LoginForm />
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  if (user && !isLoading) {
+    console.log("User already authenticated, redirecting to dashboard");
+    router.push("/dashboard");
+    return null;
+  }
+
+  if (!user && !isLoading) {
+    return (
+      <div className="flex min-h-[calc(60vh)] md:min-h-[calc(60vh)] w-full items-center justify-center p-4 md:p-10">
+        <div className="w-full max-w-sm">
+          <LoginForm />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

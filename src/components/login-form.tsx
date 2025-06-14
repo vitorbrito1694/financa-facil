@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { emailLogin, signInWithGoogle } from "@/utils/supabase/client-actions";
+import { useAuth } from "@/contexts/auth-context";
 
 export function LoginForm({
   className,
@@ -26,13 +26,15 @@ export function LoginForm({
     formState: { errors },
   } = useForm();
 
+  const { signInWithEmail, signInWithGoogle } = useAuth();
+
   const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
     const formData = new FormData();
 
     formData.append("email", data.email);
     formData.append("password", data.password);
 
-    emailLogin(formData);
+    signInWithEmail(formData);
   };
 
   return (
