@@ -55,8 +55,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const { user } = useAuth();
 
-  console.log(user);
-
   return (
     <Sidebar {...props}>
       <SidebarHeader>

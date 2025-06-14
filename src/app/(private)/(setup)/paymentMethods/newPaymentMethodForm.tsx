@@ -59,7 +59,6 @@ export default function NewPaymentMethodForm({
 
   const onSubmit = async (values: FormValues) => {
     try {
-      console.log(values);
       const newValues = {
         ...values,
         userId: "1",

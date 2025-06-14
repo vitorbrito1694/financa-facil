@@ -9,7 +9,6 @@ export default function LoginPage() {
   const router = useRouter();
 
   if (user && !isLoading) {
-    console.log("User already authenticated, redirecting to dashboard");
     router.push("/dashboard");
     return null;
   }

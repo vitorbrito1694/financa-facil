@@ -27,7 +27,7 @@ export default function RootLayout({
   const { user, isLoading } = useAuth();
 
   if (!user && !isLoading) {
-    console.log("Unauthenticated user, redirecting to login");
+    // * Unauthenticated user, redirecting to login
     router.push("/login");
     return;
   }

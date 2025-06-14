@@ -49,12 +49,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signInWith = (provider: "google") => async () => {
-    console.log(`logando com ${provider}`);
     const supabase = await createClientForBrowser();
 
     const authCallbackUrl = `${process.env.NEXT_PUBLIC_URL}/auth/callback`;
-
-    console.log(authCallbackUrl);
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -62,8 +59,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         redirectTo: authCallbackUrl,
       },
     });
-
-    console.log(data);
 
     if (error) {
       console.error("Error signing in with provider:", error);
@@ -96,6 +91,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const signupData = {
       email: formData.get("email") as string,
       password: formData.get("password") as string,
+      options: {
+        data: {
+          first_name: formData.get("first-name") as string,
+          last_name: formData.get("last-name") as string,
+        },
+      },
     };
 
     const { data, error } = await supabase.auth.signUp(signupData);
