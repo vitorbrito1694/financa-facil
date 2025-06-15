@@ -1,15 +1,12 @@
 import { prisma } from "@/lib/prisma";
 
 async function main() {
-  await prisma.user.createMany({
-    data: [
-      { name: "Vitor Brito", email: "vitoraraujo1694@gmail.com" },
-      { name: "Raquel Brito", email: "quellcarvalho97@gmail.com" },
-    ],
-    skipDuplicates: true,
-  });
-
   const newUser = await prisma.user.findMany();
+
+  if (newUser.length === 0) {
+    console.log("No users found. Exiting seed script.");
+    return;
+  }
 
   await prisma.paymentMethod.createMany({
     data: [

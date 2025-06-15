@@ -4,23 +4,24 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
-  directUrl    = env("DIRECT_URL")
-  relationMode = "prisma"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id             String          @id @default(uuid())
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  email          String          @unique
-  name           String?
-  role           Role            @default(USER)
-  accounts       Account[]
-  categories     Category[]
-  paymentMethods PaymentMethod[]
-  transactions   Transaction[]
+  id                 String          @id
+  email              String          @unique
+  last_sign_in_at    DateTime
+  is_super_admin     Boolean         @default(false)
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  phone              String?
+  raw_user_meta_data Json
+  accounts           Account[]
+  categories         Category[]
+  paymentMethods     PaymentMethod[]
+  transactions       Transaction[]
 }
 
 model Account {

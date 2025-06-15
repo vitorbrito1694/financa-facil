@@ -10,8 +10,21 @@ export async function GET(request: Request) {
 
     const search = searchParams.get("search") || undefined;
     const type = searchParams.get("type") || undefined;
+    const userId = searchParams.get("userId");
 
-    const where: any = {};
+    console.log(userId);
+
+    // Return error if userId is not provided
+    if (!userId) {
+      return NextResponse.json(
+        { error: "User ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const where: any = {
+      userId: userId, // Add userId to where clause
+    };
 
     if (search) {
       where.name = {

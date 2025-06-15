@@ -4,14 +4,18 @@ import {
   PaymentMethodsParams,
   PaymentMethodsResponse,
 } from "@/types/payment-methods";
+import { useAuth } from "@/contexts/auth-context";
 
 export function usePaymentMethods(initialParams: PaymentMethodsParams = {}) {
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<PaymentMethodsResponse | null>(null);
   const [params, setParams] = useState(initialParams);
 
   const fetchPaymentMethods = useCallback(async () => {
+    if (!user) return; // Don't fetch if there's no authenticated user
+
     try {
       setIsLoading(true);
       setError(null);
@@ -21,6 +25,7 @@ export function usePaymentMethods(initialParams: PaymentMethodsParams = {}) {
       if (params.limit) searchParams.append("limit", params.limit.toString());
       if (params.search) searchParams.append("search", params.search);
       if (params.type) searchParams.append("type", params.type);
+      searchParams.append("userId", user.id); // Add userId to query params
 
       const response = await fetch(`/api/v1/payment-methods?${searchParams}`);
 
@@ -35,7 +40,7 @@ export function usePaymentMethods(initialParams: PaymentMethodsParams = {}) {
     } finally {
       setIsLoading(false);
     }
-  }, [params]);
+  }, [params, user]); // Add user to dependencies
 
   useEffect(() => {
     fetchPaymentMethods();
@@ -52,6 +57,8 @@ export function usePaymentMethods(initialParams: PaymentMethodsParams = {}) {
     async (
       newPaymentMethod: Omit<PaymentMethod, "id" | "createdAt" | "updatedAt">
     ) => {
+      if (!user) throw new Error("User must be authenticated");
+
       try {
         setIsLoading(true);
         setError(null);
@@ -61,7 +68,10 @@ export function usePaymentMethods(initialParams: PaymentMethodsParams = {}) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(newPaymentMethod),
+          body: JSON.stringify({
+            ...newPaymentMethod,
+            userId: user.id, // Include userId in the payload
+          }),
         });
 
         if (!response.ok) {
@@ -70,7 +80,6 @@ export function usePaymentMethods(initialParams: PaymentMethodsParams = {}) {
 
         const json = await response.json();
 
-        // Refresh the list after creating
         await fetchPaymentMethods();
 
         return json;
@@ -81,7 +90,7 @@ export function usePaymentMethods(initialParams: PaymentMethodsParams = {}) {
         setIsLoading(false);
       }
     },
-    [fetchPaymentMethods]
+    [fetchPaymentMethods, user] // Add user to dependencies
   );
 
   return {
