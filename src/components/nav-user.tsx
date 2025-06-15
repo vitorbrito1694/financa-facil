@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 import { type User } from "@supabase/supabase-js";
 import { useAuth } from "@/contexts/auth-context";
-import { getInitials } from "@/lib/utils";
+import { getFirstAndLastName, getInitials } from "@/lib/utils";
 
 export function NavUser({ user }: { user: User }) {
   const { isMobile } = useSidebar();
@@ -43,18 +43,27 @@ export function NavUser({ user }: { user: User }) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
+                {user?.user_metadata?.full_name && (
+                  <AvatarImage
+                    src={user?.user_metadata?.avatar_url}
+                    alt={"User Avatar"}
+                  />
+                )}
                 <AvatarFallback className="rounded-lg">
-                  {getInitials(
-                    user?.user_metadata?.first_name +
-                      " " +
-                      user?.user_metadata?.last_name
-                  )}
+                  {user?.user_metadata?.full_name
+                    ? getInitials(user?.user_metadata?.full_name)
+                    : getInitials(
+                        user?.user_metadata?.first_name +
+                          " " +
+                          user?.user_metadata?.last_name
+                      )}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {user.user_metadata?.first_name}
+                  {user.user_metadata?.full_name
+                    ? getFirstAndLastName(user.user_metadata?.full_name)
+                    : getFirstAndLastName(user.user_metadata?.first_name)}
                 </span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
@@ -70,12 +79,27 @@ export function NavUser({ user }: { user: User }) {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  {user?.user_metadata?.full_name && (
+                    <AvatarImage
+                      src={user?.user_metadata?.avatar_url}
+                      alt={"User Avatar"}
+                    />
+                  )}
+                  <AvatarFallback className="rounded-lg">
+                    {user?.user_metadata?.full_name
+                      ? getInitials(user?.user_metadata?.full_name)
+                      : getInitials(
+                          user?.user_metadata?.first_name +
+                            " " +
+                            user?.user_metadata?.last_name
+                        )}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {user.user_metadata?.first_name}
+                    {user.user_metadata?.full_name
+                      ? getFirstAndLastName(user.user_metadata?.full_name)
+                      : getFirstAndLastName(user.user_metadata?.first_name)}
                   </span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>

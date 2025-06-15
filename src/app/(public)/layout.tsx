@@ -8,6 +8,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { useAuth } from "@/contexts/auth-context";
+import { getFirstAndLastName } from "@/lib/utils";
 
 export default function RootLayout({
   children,
@@ -24,10 +25,19 @@ export default function RootLayout({
             <div>
               <Logo className="h-10" />
             </div>
-            <div className="gap-2 flex items-center">
+            <div className="gap-4 flex items-center">
               {user && (
                 <>
-                  <span>Olá </span>
+                  <span onClick={() => console.log(user)}>
+                    Olá{" "}
+                    {user?.user_metadata?.full_name
+                      ? getFirstAndLastName(user?.user_metadata?.full_name)
+                      : getFirstAndLastName(
+                          user?.user_metadata?.first_name +
+                            " " +
+                            user?.user_metadata?.last_name
+                        )}
+                  </span>
                   <Button variant={"default"} asChild>
                     <Link href="/dashboard">Ir para meu Dashboard</Link>
                   </Button>
