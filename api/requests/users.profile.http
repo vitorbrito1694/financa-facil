@@ -1,0 +1,11 @@
+### Get profile of the user
+GET http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/profile
+
+### Create a new account for the user
+PATCH http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/profile
+Content-Type: application/json
+
+{
+  "displayName": "Vitor",
+  "bio": "Olá, eu sou o Vitor Araujo!"
+}

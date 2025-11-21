@@ -1,0 +1,13 @@
+###
+GET http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431
+
+###
+GET http://localhost:1239/users/email?email=vitoraraujo1694%40gmail.com
+
+###
+PATCH http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/status
+Content-Type: application/json
+
+{
+  "active": true
+}
