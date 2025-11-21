@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { Account } from './account.entity';
 
@@ -7,8 +15,10 @@ export class AccountsController {
   constructor(private svc: AccountsService) {}
 
   @Post()
-  create(@Param('userId') userId: string, @Body() body: Partial<Account>) {
-    // allow passing owner as userId for convenience
+  create(
+    @Param('userId', new ParseUUIDPipe()) userId: string,
+    @Body() body: Partial<Account>,
+  ) {
     const payload = { ...body, owner: { id: userId } } as Partial<Account>;
     return this.svc.create(payload);
   }

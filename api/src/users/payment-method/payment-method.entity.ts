@@ -21,7 +21,7 @@ export class PaymentMethod {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: false, type: 'varchar' })
+  @Column({ nullable: false, type: 'varchar', unique: true })
   name: string;
 
   @Index()

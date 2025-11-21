@@ -21,7 +21,7 @@ export class Account {
   id: string;
 
   @Index()
-  @Column()
+  @Column({ nullable: false, type: 'varchar', unique: true })
   name: string;
 
   @Column({

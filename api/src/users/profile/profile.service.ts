@@ -1,27 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Profile } from './profile.entity';
+import { UsersService } from '../users.service';
 
 @Injectable()
 export class ProfileService {
   constructor(
     @InjectRepository(Profile)
-    private profilesRepo: Repository<Profile>,
+    private profileRepo: Repository<Profile>,
+    private usersService: UsersService,
   ) {}
 
   async updateProfile(userId: string, data: Partial<Profile>) {
-    const user = { id: userId } as any;
-    let profile = await this.profilesRepo.findOne({
+    const user = await this.usersService.findOne(userId);
+    if (!user) throw new NotFoundException(`User with id ${userId} not found`);
+
+    let profile = await this.profileRepo.findOne({
       where: { user: { id: userId } } as any,
     });
     if (!profile) {
-      profile = this.profilesRepo.create();
+      profile = this.profileRepo.create();
       Object.assign(profile, data);
-      profile.user = user;
+      profile.user = { id: userId } as any;
     } else {
       Object.assign(profile, data);
     }
-    return this.profilesRepo.save(profile);
+    return this.profileRepo.save(profile);
   }
 }

@@ -6,6 +6,7 @@ import {
   Patch,
   Body,
   ParseUUIDPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 
@@ -14,13 +15,18 @@ export class UsersController {
   constructor(private svc: UsersService) {}
 
   @Get('email')
-  getByEmail(@Query('email') email: string) {
-    return this.svc.findByEmail(email);
+  async getByEmail(@Query('email') email: string) {
+    const user = await this.svc.findByEmail(email);
+    if (!user)
+      throw new NotFoundException(`User with email ${email} not found`);
+    return user;
   }
 
   @Get(':id')
-  getOne(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.svc.findOne(id);
+  async getOne(@Param('id', new ParseUUIDPipe()) id: string) {
+    const user = await this.svc.findOne(id);
+    if (!user) throw new NotFoundException(`User with id ${id} not found`);
+    return user;
   }
 
   @Patch(':id/status')
