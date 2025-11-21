@@ -1,5 +1,8 @@
+@host=http://localhost
+@port=1239
+
 ###
-POST http://localhost:1239/auth/send-code HTTP/1.1
+POST {{host}}:{{port}}/auth/send-code HTTP/1.1
 content-type: application/json
 
 {
@@ -7,7 +10,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:1239/auth/verify-code HTTP/1.1
+POST {{host}}:{{port}}/auth/verify-code HTTP/1.1
 content-type: application/json
 
 {

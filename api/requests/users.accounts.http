@@ -1,14 +1,17 @@
+@host=http://localhost
+@port=1239
+
 ### Get all accounts for the user
-GET http://localhost:1239/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/accounts
+GET {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/accounts
 
 ### Get one account for the user
-GET http://localhost:1239/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/accounts/939fe4dc-0362-43ea-8c35-94ca45f2f9ec
+GET {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/accounts/939fe4dc-0362-43ea-8c35-94ca45f2f9ec
 
 ### Delete one account for the user
-DELETE http://localhost:1239/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/accounts/939fe4dc-0362-43ea-8c35-94ca45f2f9ec
+DELETE {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/accounts/939fe4dc-0362-43ea-8c35-94ca45f2f9ec
 
 ### Create a new account for the user
-POST http://localhost:1239/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/accounts
+POST {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/accounts
 Content-Type: application/json
 
 {

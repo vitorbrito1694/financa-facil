@@ -1,8 +1,11 @@
+@host=http://localhost
+@port=1239
+
 ### Get payment methods of the user
-GET http://localhost:1239/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-methods
+GET {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-methods
 
 ### Create a new payment method for the user
-POST http://localhost:1239/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-methods
+POST {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-methods
 Content-Type: application/json
 
 {
@@ -14,10 +17,10 @@ Content-Type: application/json
 }
 
 ### Delete payment methods of the user
-DELETE http://localhost:1239/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-methods/b23588bd-8295-4944-9d16-ffa434c0e921
+DELETE {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-methods/b23588bd-8295-4944-9d16-ffa434c0e921
 
 ### Update a payment method for the user
-PATCH http://localhost:1239/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-methods/b23588bd-8295-4944-9d16-ffa434c0e921
+PATCH {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-methods/b23588bd-8295-4944-9d16-ffa434c0e921
 Content-Type: application/json
 
 {

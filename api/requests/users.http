@@ -1,11 +1,14 @@
-###
-GET http://localhost:1239/users/95efbd6e-2908-4535-a909-86fa2e9ed428
+@host=http://localhost
+@port=1239
 
 ###
-GET http://localhost:1239/users/email?email=vitoraraujo1694%40gmail.com
+GET {{host}}:{{port}}/users/95efbd6e-2908-4535-a909-86fa2e9ed428
 
 ###
-PATCH http://localhost:1239/users/95efbd6e-2908-4535-a909-86fa2e9ed428/status
+GET {{host}}:{{port}}/users/email?email=vitoraraujo1694%40gmail.com
+
+###
+PATCH {{host}}:{{port}}/users/95efbd6e-2908-4535-a909-86fa2e9ed428/status
 Content-Type: application/json
 
 {
