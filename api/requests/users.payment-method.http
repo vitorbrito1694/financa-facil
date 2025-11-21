@@ -1,0 +1,29 @@
+### Get payment methods of the user
+GET http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/payment-methods
+
+### Create a new payment method for the user
+POST http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/payment-methods
+Content-Type: application/json
+
+{
+  "name": "BTG",
+  "type": "CARD",
+  "paymentAt": "2024-07-10T00:00:00.000Z",
+  "closingAt": "2024-07-05T00:00:00.000Z",
+  "enabled": true
+}
+
+### Delete payment methods of the user
+DELETE http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/payment-methods/b23588bd-8295-4944-9d16-ffa434c0e921
+
+### Update a payment method for the user
+PATCH http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/payment-methods/b23588bd-8295-4944-9d16-ffa434c0e921
+Content-Type: application/json
+
+{
+  "name": "BTG",
+  "type": "CARD",
+  "paymentAt": "2024-07-01T00:00:00.000Z",
+  "closingAt": "2024-07-05T00:00:00.000Z",
+  "enabled": true
+}

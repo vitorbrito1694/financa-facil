@@ -6,6 +6,9 @@ import { Profile } from './profile/profile.entity';
 
 @Injectable()
 export class UsersService {
+  updateProfile(id: string, body: any) {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(User)
     private usersRepo: Repository<User>,
@@ -16,14 +19,14 @@ export class UsersService {
   findOne(id: string) {
     return this.usersRepo.findOne({
       where: { id },
-      relations: ['profile', 'accounts'],
+      relations: ['profile', 'accounts', 'paymentMethods'],
     });
   }
 
   findByEmail(email: string) {
     return this.usersRepo.findOne({
       where: { email },
-      relations: ['profile', 'accounts'],
+      relations: ['profile', 'accounts', 'paymentMethods'],
     });
   }
 
@@ -33,22 +36,6 @@ export class UsersService {
       const ent = this.usersRepo.create({ email });
       return this.usersRepo.save(ent);
     });
-  }
-
-  async updateProfile(userId: string, data: Partial<Profile>) {
-    const user = await this.findOne(userId);
-    if (!user) return null;
-    let profile = await this.profilesRepo.findOne({
-      where: { user: { id: userId } } as any,
-    });
-    if (!profile) {
-      profile = this.profilesRepo.create();
-      Object.assign(profile, data);
-      profile.user = user;
-    } else {
-      Object.assign(profile, data);
-    }
-    return this.profilesRepo.save(profile);
   }
 
   setActive(userId: string, active: boolean) {

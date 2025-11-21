@@ -2,10 +2,10 @@
 GET http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/accounts
 
 ### Get one account for the user
-GET http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/accounts/a19a0503-94e0-4068-8458-480fc5478118
+GET http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/accounts/939fe4dc-0362-43ea-8c35-94ca45f2f9ec
 
 ### Delete one account for the user
-DELETE http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/accounts/a19a0503-94e0-4068-8458-480fc5478118
+DELETE http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/accounts/939fe4dc-0362-43ea-8c35-94ca45f2f9ec
 
 ### Create a new account for the user
 POST http://localhost:1239/users/92177780-da38-4d18-9081-2c64069f3431/accounts

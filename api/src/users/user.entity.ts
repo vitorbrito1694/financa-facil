@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Profile } from './profile/profile.entity';
 import { Account } from './accounts/account.entity';
+import { PaymentMethod } from './payment-method/payment-method.entity';
 
 @Entity('users')
 export class User {
@@ -40,4 +41,7 @@ export class User {
 
   @OneToMany(() => Account, (account) => account.owner)
   accounts?: Account[];
+
+  @OneToMany(() => PaymentMethod, (pm) => pm.user)
+  paymentMethods?: PaymentMethod[];
 }
