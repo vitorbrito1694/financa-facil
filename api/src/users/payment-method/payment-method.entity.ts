@@ -10,10 +10,10 @@ import {
 import { User } from '../user.entity';
 
 export enum PaymentMethodType {
-  CARD = 'CARD',
-  BANK_ACCOUNT = 'BANK_ACCOUNT',
+  CREDIT_CARD = 'CREDIT_CARD',
+  DEBIT_CARD = 'DEBIT_CARD',
   PIX = 'PIX',
-  OTHER = 'OTHER',
+  TED = 'TED',
 }
 
 @Entity('payment_methods')

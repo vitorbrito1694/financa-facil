@@ -83,9 +83,63 @@ npm run dev
 - Adicionar rate limiting nas rotas de envio de código e proteções contra abuso.
 - Armazenar códigos de verificação hashed (bcrypt) para segurança adicional.
 - Implementar testes unitários e e2e para fluxos críticos (auth, accounts).
-
-Se quiser, eu posso:
+  Se quiser, eu posso:
 
 - gerar migrations para o esquema atual,
 - adicionar DTOs/validações para os endpoints de usuário e accounts,
 - criar um script `npm run db:reset` para desenvolvimento.
+
+**Docker - Postgres Local**
+
+- **Pasta/configuração**: criei a pasta `docker/` com os arquivos `docker/docker-compose.yml`, `docker/.env` e `docker/init.sql`.
+- **O que os arquivos fazem**: `docker-compose.yml` sobe um serviço `db` baseado na imagem oficial do Postgres; `.env` define usuário, senha e nome do banco;
+
+- **Local atual da configuração (API)**: a configuração do Postgres está em `api/docker/` — arquivos principais:
+
+  - `api/docker/docker-compose.yml` (compose do serviço Postgres)
+  - `api/docker/.env` (variáveis de ambiente lidas pelo Compose)
+
+- **O que os arquivos fazem**: o `docker-compose.yml` sobe um serviço `db` baseado na imagem oficial do Postgres; o `.env` define usuário, senha e nome do banco; o serviço usa `container_name: financa-facil-db` e monta o volume `pg_data`.
+
+- **Subir o banco (terminal do VSCode ou PowerShell/cmd.exe)**: opções:
+
+- Entrar no diretório e subir:
+
+```cmd
+cd api\docker
+docker compose up -d
+```
+
+- Ou rodar sem mudar de diretório:
+
+```cmd
+docker compose -f api\docker\docker-compose.yml --env-file api\docker\.env up -d --build
+```
+
+- **Parar e remover containers/volumes**:
+
+```cmd
+docker compose -f api\docker\docker-compose.yml down -v
+```
+
+- **Ver logs do banco**:
+
+```cmd
+docker compose -f api\docker\docker-compose.yml logs -f db
+```
+
+- **Conectar ao banco**: configure seu cliente (pgAdmin, DBeaver, DataGrip, ou o próprio app) com:
+
+  - **Host**: `localhost`
+  - **Porta**: `5432`
+  - **Database**: `financas_db` (definido em `api/docker/.env`)
+  - **User**: `postgres`
+  - **Password**: `Ma842684`
+
+- **Via VSCode (Docker extension)**: abra a aba _Docker_, localize `Compose` ou o arquivo `docker-compose.yml`, clique com o botão direito e escolha _Compose Up_ para subir o serviço e _Compose Down_ para parar.
+
+- **Validação rápida**: após subir, rode `docker ps` para confirmar que o container `db` está rodando e acesse `docker compose -f docker/docker-compose.yml logs db` para ver a inicialização. A tabela de exemplo `exemplo` será criada automaticamente na primeira inicialização pelo `init.sql`.
+
+  - Observação: o `docker-compose.yml` em `api/docker` utiliza `container_name: financa-facil-db` e monta o volume local `api/docker/pg_data` para persistência.
+
+Se quiser, eu também posso adicionar um script npm (ex.: `npm run db:up` / `db:down`) no `api/package.json` para facilitar os comandos.
