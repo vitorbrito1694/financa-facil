@@ -2,10 +2,10 @@
 @port=1239
 
 ### Get profile of the user
-GET {{host}}:{{port}}/users/92177780-da38-4d18-9081-2c64069f3431/profile
+GET {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/profile
 
-### Create a new account for the user
-PATCH {{host}}:{{port}}/users/92177780-da38-4d18-9081-2c64069f3431/profile
+### Update the profile of the user
+PATCH {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/profile
 Content-Type: application/json
 
 {
