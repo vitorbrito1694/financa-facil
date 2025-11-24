@@ -9,10 +9,10 @@ POST {{host}}:{{port}}/users/664c7094-363c-4ad0-a1f8-a7212ea2fd2d/payment-method
 Content-Type: application/json
 
 {
-  "name": "BTG",
-  "type": "CREDIT_CARD",
-  "paymentAt": "2024-07-10T00:00:00.000Z",
-  "closingAt": "2024-07-05T00:00:00.000Z",
+  "name": "Itaú",
+  "type": "TED",
+  "paymentAt": null,
+  "closingAt": null,
   "enabled": true
 }
 
@@ -26,7 +26,7 @@ Content-Type: application/json
 {
   "name": "BTG",
   "type": "CREDIT_CARD",
-  "paymentAt": "2024-07-01T00:00:00.000Z",
-  "closingAt": "2024-07-05T00:00:00.000Z",
+  "paymentAt": 6,
+  "closingAt": 26,
   "enabled": true
 }

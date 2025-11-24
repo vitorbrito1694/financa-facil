@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
   Index,
 } from 'typeorm';
 import { User } from '../user.entity';
+import { Transaction } from '../transactions/transaction.entity';
 
 export enum PaymentMethodType {
   CREDIT_CARD = 'CREDIT_CARD',
@@ -28,17 +30,20 @@ export class PaymentMethod {
   @Column({ type: 'enum', enum: PaymentMethodType })
   type: PaymentMethodType;
 
-  @Column({ type: 'timestamptz', nullable: true })
-  paymentAt?: Date;
+  @Column({ type: 'integer', nullable: true })
+  paymentAt?: number;
 
-  @Column({ type: 'timestamptz', nullable: true })
-  closingAt?: Date;
+  @Column({ type: 'integer', nullable: true })
+  closingAt?: number;
 
   @Column({ default: true })
   enabled: boolean;
 
   @ManyToOne(() => User, (user) => user.paymentMethods, { onDelete: 'CASCADE' })
   user: User;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.paymentMethod)
+  transactions?: Transaction[];
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

@@ -9,14 +9,29 @@ import { ProfileController } from './profile/profile.controller';
 import { PaymentMethodController } from './payment-method/payment-method.controller';
 import { PaymentMethodService } from './payment-method/payment-method.service';
 import { ProfileService } from './profile/profile.service';
+import { Transaction } from './transactions/transaction.entity';
+import { TransactionsService } from './transactions/transactions.service';
+import { TransactionsController } from './transactions/transactions.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Profile, PaymentMethod])],
-  providers: [UsersService, ProfileService, PaymentMethodService],
-  controllers: [UsersController, ProfileController, PaymentMethodController],
+  imports: [
+    TypeOrmModule.forFeature([User, Profile, PaymentMethod, Transaction]),
+  ],
+  providers: [
+    UsersService,
+    ProfileService,
+    PaymentMethodService,
+    TransactionsService,
+  ],
+  controllers: [
+    UsersController,
+    ProfileController,
+    PaymentMethodController,
+    TransactionsController,
+  ],
   exports: [
     UsersService,
-    TypeOrmModule.forFeature([User, Profile, PaymentMethod]),
+    TypeOrmModule.forFeature([User, Profile, PaymentMethod, Transaction]),
   ],
 })
 export class UsersModule {}

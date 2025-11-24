@@ -1,0 +1,55 @@
+@host=http://localhost
+@port=1239
+@userId=664c7094-363c-4ad0-a1f8-a7212ea2fd2d
+@transactionId=3b7d6033-63a9-4669-8ca1-bd83089eb075
+
+### Get all transactions for the user
+GET {{host}}:{{port}}/users/{{userId}}/transactions
+
+### Get one transaction for the user
+GET {{host}}:{{port}}/users/{{userId}}/transactions/{{transactionId}}
+
+### Delete one transaction for the user
+DELETE {{host}}:{{port}}/users/{{userId}}/transactions/{{transactionId}}
+
+### Create a new transaction (Expense)
+POST {{host}}:{{port}}/users/{{userId}}/transactions
+Content-Type: application/json
+
+{
+  "amount": 150.00,
+  "date": "2023-10-27T10:00:00Z",
+  "type": "EXPENSE",
+  "description": "Grocery shopping",
+  "payment_method_id": "34efd581-f495-4012-a971-a2a14008592b",
+  "installmentCount": 1,
+  "installmentNumber": 1
+}
+
+### Create a new transaction (Income)
+POST {{host}}:{{port}}/users/{{userId}}/transactions
+Content-Type: application/json
+
+{
+  "amount": 16000.00,
+  "date": "2025-11-25T10:00:00Z",
+  "type": "INCOME",
+  "description": "Salario",
+  "payment_method_id": "34efd581-f495-4012-a971-a2a14008592b",
+  "installmentCount": 2,
+  "installmentNumber": 1
+}
+
+### Create a new transaction with installments
+POST {{host}}:{{port}}/users/{{userId}}/transactions
+Content-Type: application/json
+
+{
+  "amount": 1320.00,
+  "date": "2025-10-01T10:00:00Z",
+  "type": "EXPENSE",
+  "description": "New Laptop",
+  "payment_method_id": "7d44416d-b88e-427d-a513-b6219d1d6821",
+  "installmentCount": 3,
+  "installmentNumber": 1
+}
