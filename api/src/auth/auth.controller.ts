@@ -8,14 +8,13 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
-
-class SendCodeDto {
-  email: string;
-}
-class VerifyCodeDto {
-  email: string;
-  code: string;
-}
+import {
+  SendCodeDto,
+  SendCodeResponseDto,
+  VerifyCodeDto,
+  VerifyCodeResponseDto,
+} from './dto/create-auth.dto';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -23,12 +22,22 @@ export class AuthController {
 
   @Post('send-code')
   @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    description: 'Código de verificação enviado com sucesso.',
+    type: SendCodeResponseDto,
+  })
   async sendCode(@Body() body: SendCodeDto) {
     if (!body?.email) throw new BadRequestException('Email é obrigatório');
     return this.authService.sendCode(body.email);
   }
 
   @Post('verify-code')
+  @ApiResponse({
+    status: 201,
+    description: 'Login realizado com sucesso.',
+    type: VerifyCodeResponseDto,
+  })
   async verifyCode(
     @Body() body: VerifyCodeDto,
     @Res({ passthrough: true }) res: Response,
