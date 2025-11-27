@@ -3,9 +3,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { FileLoggingExceptionFilter } from './common/filters/file-logging-exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
   app.useGlobalFilters(new FileLoggingExceptionFilter());
 
   const config = new DocumentBuilder()
@@ -19,3 +21,4 @@ async function bootstrap() {
   await app.listen(Number(process.env.PORT) || 1239);
 }
 bootstrap();
+

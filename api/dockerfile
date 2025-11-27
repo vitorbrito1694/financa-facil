@@ -1,0 +1,23 @@
+# 1. Usar uma imagem base do Node.js
+FROM node:18-alpine
+
+# 2. Definir o diretório de trabalho dentro do container
+WORKDIR /src
+
+# 3. Copiar os arquivos de dependências
+COPY package*.json ./
+
+# 4. Instalar as dependências
+RUN npm install
+
+# 5. Copiar o restante do código do projeto
+COPY . .
+
+# 6. Compilar o código (Build)
+RUN npm run build
+
+# 7. Expor a porta que o Nest usa (padrão 3000)
+EXPOSE 1239
+
+# 8. Comando para iniciar a aplicação
+CMD ["npm", "run", "start:prod"]

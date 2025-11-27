@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: financa-facil-db
+    restart: always
+    env_file:
+      - ./api/.env
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+
+  # --- Serviço do Backend (NestJS) ---
+  backend:
+    build:
+      context: ./api  # Aponta para a pasta da API
+      dockerfile: Dockerfile
+    container_name: financa-facil-api
+    ports:
+      - "1239:1239"
+    depends_on:
+      - db
+    env_file:
+      - ./api/.env
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 1239
+
+  # --- Serviço do Frontend (Next.js) ---
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: financa-facil-app
+    ports:
+      - "1240:1240"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:1239
+volumes:
+  pg_data:

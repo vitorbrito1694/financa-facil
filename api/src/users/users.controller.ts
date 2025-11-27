@@ -2,30 +2,24 @@ import {
   Controller,
   Get,
   Param,
-  Query,
   Patch,
   Body,
-  ParseUUIDPipe,
   NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { EmailValidationPipe } from '../common/pipes/email-validation.pipe';
 
 @Controller('users')
 export class UsersController {
-  constructor(private svc: UsersService) {}
+  constructor(private userService: UsersService) {}
 
-  @Get('email')
-  async getByEmail(@Query('email') email: string) {
-    const user = await this.svc.findByEmail(email);
-    if (!user)
+  @Get(':email')
+  async getOne(@Param('email', EmailValidationPipe) email: string) {
+    const user = await this.userService.findByEmail(email);
+
+    if (!user) {
       throw new NotFoundException(`User with email ${email} not found`);
-    return user;
-  }
-
-  @Get(':id')
-  async getOne(@Param('id', new ParseUUIDPipe()) id: string) {
-    const user = await this.svc.findOne(id);
-    if (!user) throw new NotFoundException(`User with id ${id} not found`);
+    }
     return user;
   }
 
@@ -36,9 +30,9 @@ export class UsersController {
   ) {
     const promises = [] as Promise<any>[];
     if (body.active !== undefined)
-      promises.push(this.svc.setActive(id, body.active));
+      promises.push(this.userService.setActive(id, body.active));
     if (body.admin !== undefined)
-      promises.push(this.svc.setAdmin(id, body.admin));
+      promises.push(this.userService.setAdmin(id, body.admin));
     if (promises.length === 0) {
       return { success: false, message: 'No update fields provided' };
     }

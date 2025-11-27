@@ -1,22 +1,29 @@
 import {
   Controller,
   Patch,
-  Param,
   Body,
-  ParseUUIDPipe,
   Get,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ProfileService } from './profile.service';
+import { AuthGuard } from '../../auth/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@Controller('users/:id/profile')
+@ApiTags('Profile')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
+@Controller('users/profile')
 export class ProfileController {
   constructor(private readonly usersSvc: ProfileService) {}
 
+  @Get()
+  getProfile(@Request() req) {
+    return this.usersSvc.findOne(req.user.sub);
+  }
+
   @Patch()
-  updateProfile(
-    @Param('id', new ParseUUIDPipe()) id: string,
-    @Body() body: any,
-  ) {
-    return this.usersSvc.updateProfile(id, body);
+  updateProfile(@Request() req, @Body() body: any) {
+    return this.usersSvc.updateProfile(req.user.sub, body);
   }
 }

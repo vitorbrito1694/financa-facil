@@ -38,16 +38,19 @@ export class AccountsService {
     return this.accountRepo.save(ent);
   }
 
-  findAll() {
-    return this.accountRepo.find();
+  findAll(userId: string) {
+    return this.accountRepo.find({ where: { owner: { id: userId } } });
   }
 
-  findOne(id: string) {
-    return this.accountRepo.findOne({ where: { id } });
+  findOne(id: string, userId: string) {
+    return this.accountRepo.findOne({ where: { id, owner: { id: userId } } });
   }
 
-  async remove(id: string) {
-    await this.accountRepo.delete(id);
+  async remove(id: string, userId: string) {
+    const result = await this.accountRepo.delete({ id, owner: { id: userId } });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Account with id ${id} not found`);
+    }
     return { ok: true };
   }
 }

@@ -28,4 +28,12 @@ export class ProfileService {
     }
     return this.profileRepo.save(profile);
   }
+
+  async findOne(userId: string) {
+    const profile = await this.profileRepo.findOne({
+      where: { user: { id: userId } } as any,
+    });
+    if (!profile) throw new NotFoundException('Profile not found');
+    return profile;
+  }
 }

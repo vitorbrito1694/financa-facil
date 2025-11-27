@@ -12,6 +12,7 @@ import { Profile } from './profile/profile.entity';
 import { Account } from './accounts/account.entity';
 import { PaymentMethod } from './payment-method/payment-method.entity';
 import { Transaction } from './transactions/transaction.entity';
+import { TransactionGroup } from './transaction-group/transaction-group.entity';
 
 @Entity('users')
 export class User {
@@ -48,4 +49,7 @@ export class User {
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   transactions?: Transaction[];
+
+  @OneToMany(() => TransactionGroup, (group) => group.user)
+  transactionGroups?: TransactionGroup[];
 }

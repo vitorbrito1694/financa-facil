@@ -4,45 +4,44 @@ import {
   Delete,
   Get,
   Param,
-  NotFoundException,
-  ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { PaymentMethodService } from './payment-method.service';
 import { PaymentMethod } from './payment-method.entity';
+import { AuthGuard } from '../../auth/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@Controller('users/:userId/payment-methods')
+@ApiTags('Payment Methods')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
+@Controller('users/payment-methods')
 export class PaymentMethodController {
   constructor(private svc: PaymentMethodService) {}
 
   @Post()
-  create(
-    @Param('userId', new ParseUUIDPipe()) userId: string,
-    @Body() body: Partial<PaymentMethod>,
-  ) {
-    return this.svc.createForUser(userId, body);
+  create(@Request() req, @Body() body: Partial<PaymentMethod>) {
+    return this.svc.createForUser(req.user.sub, body);
   }
 
   @Get()
-  list(@Param('userId', new ParseUUIDPipe()) userId: string) {
-    return this.svc.findAllForUser(userId);
+  list(@Request() req) {
+    return this.svc.findAllForUser(req.user.sub);
   }
 
   @Patch(':id')
   update(
-    @Param('userId', new ParseUUIDPipe()) userId: string,
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Request() req,
+    @Param('id') id: string,
     @Body() body: Partial<PaymentMethod>,
   ) {
-    return this.svc.updateForUser(userId, id, body);
+    return this.svc.updateForUser(req.user.sub, id, body);
   }
 
   @Delete(':id')
-  remove(
-    @Param('userId', new ParseUUIDPipe()) userId: string,
-    @Param('id', new ParseUUIDPipe()) id: string,
-  ) {
-    return this.svc.removeForUser(userId, id);
+  remove(@Request() req, @Param('id') id: string) {
+    return this.svc.removeForUser(req.user.sub, id);
   }
 }

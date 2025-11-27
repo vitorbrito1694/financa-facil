@@ -1,0 +1,23 @@
+# 1. Usar imagem base
+FROM node:18-alpine
+
+# 2. Diretório de trabalho
+WORKDIR /src
+
+# 3. Copiar dependências
+COPY package*.json ./
+
+# 4. Instalar dependências
+RUN npm install
+
+# 5. Copiar código fonte
+COPY . .
+
+# 6. Build do Next.js
+RUN npm run build
+
+# 7. Expor a porta do Next (padrão 3000)
+EXPOSE 1240
+
+# 8. Iniciar o servidor Next
+CMD ["npm", "run", "start"]
