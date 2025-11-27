@@ -6,44 +6,52 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { AuthGuard } from '../../auth/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@Controller('users/:userId/transactions')
+@ApiTags('Transactions')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
+@Controller('users/transactions')
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Post()
-  create(
-    @Param('userId') userId: string,
-    @Body() createTransactionDto: CreateTransactionDto,
-  ) {
-    return this.transactionsService.create(userId, createTransactionDto);
+  create(@Request() req, @Body() createTransactionDto: CreateTransactionDto) {
+    return this.transactionsService.create(req.user.sub, createTransactionDto);
   }
 
   @Get()
-  findAll(@Param('userId') userId: string) {
-    return this.transactionsService.findAll(userId);
+  findAll(@Request() req) {
+    return this.transactionsService.findAll(req.user.sub);
   }
 
   @Get(':id')
-  findOne(@Param('userId') userId: string, @Param('id') id: string) {
-    return this.transactionsService.findOne(userId, id);
+  findOne(@Request() req, @Param('id') id: string) {
+    return this.transactionsService.findOne(req.user.sub, id);
   }
 
   @Patch(':id')
   update(
-    @Param('userId') userId: string,
+    @Request() req,
     @Param('id') id: string,
     @Body() updateTransactionDto: UpdateTransactionDto,
   ) {
-    return this.transactionsService.update(userId, id, updateTransactionDto);
+    return this.transactionsService.update(
+      req.user.sub,
+      id,
+      updateTransactionDto,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('userId') userId: string, @Param('id') id: string) {
-    return this.transactionsService.remove(userId, id);
+  remove(@Request() req, @Param('id') id: string) {
+    return this.transactionsService.remove(req.user.sub, id);
   }
 }

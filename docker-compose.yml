@@ -4,7 +4,7 @@ services:
     container_name: financa-facil-db
     restart: always
     env_file:
-      - ./api/.env
+      - ./api/.env.local
     ports:
       - '5432:5432'
     volumes:
@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ./api/.env
+      - ./api/.env.local
     environment:
       POSTGRES_HOST: financa-facil-db
       POSTGRES_PORT: 5432

@@ -12,7 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
     TypeOrmModule.forFeature([VerificationCode]),
     UsersModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'change_this_secret',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: Number(process.env.JWT_EXPIRES_IN) || 3600 },
     }),
   ],

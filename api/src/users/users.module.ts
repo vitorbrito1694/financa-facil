@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
@@ -12,13 +13,12 @@ import { ProfileService } from './profile/profile.service';
 import { Transaction } from './transactions/transaction.entity';
 import { TransactionsService } from './transactions/transactions.service';
 import { TransactionsController } from './transactions/transactions.controller';
-import { Account } from './accounts/account.entity';
-import { AccountsService } from './accounts/accounts.service';
-import { AccountsController } from './accounts/accounts.controller';
-import { JwtModule } from '@nestjs/jwt';
 import { TransactionGroup } from './transaction-group/transaction-group.entity';
 import { TransactionGroupService } from './transaction-group/transaction-group.service';
 import { TransactionGroupController } from './transaction-group/transaction-group.controller';
+import { Account } from './accounts/account.entity';
+import { AccountsService } from './accounts/accounts.service';
+import { AccountsController } from './accounts/accounts.controller';
 
 @Module({
   imports: [
