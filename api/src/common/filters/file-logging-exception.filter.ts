@@ -1,9 +1,4 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpException,
-} from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -29,8 +24,7 @@ export class FileLoggingExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     const timestamp = new Date().toISOString();
-    const status =
-      exception instanceof HttpException ? exception.getStatus() : 500;
+    const status = exception instanceof HttpException ? exception.getStatus() : 500;
     const message =
       exception instanceof HttpException
         ? exception.getResponse()
@@ -62,9 +56,7 @@ export class FileLoggingExceptionFilter implements ExceptionFilter {
       if (exception instanceof HttpException) {
         response.status(status).json(exception.getResponse());
       } else {
-        response
-          .status(status)
-          .json({ statusCode: status, message: 'Internal server error' });
+        response.status(status).json({ statusCode: status, message: 'Internal server error' });
       }
     }
   }

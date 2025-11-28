@@ -98,11 +98,11 @@ export class Transaction {
   })
   note: boolean;
 
-  @ManyToOne(() => User, (user) => user.transactions, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, user => user.transactions, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => PaymentMethod, (pm) => pm.transactions, {
+  @ManyToOne(() => PaymentMethod, pm => pm.transactions, {
     onDelete: 'SET NULL',
     nullable: true,
   })

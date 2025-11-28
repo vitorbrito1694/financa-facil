@@ -1,19 +1,7 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Res,
-  HttpCode,
-  BadRequestException,
-} from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpCode, BadRequestException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
-import {
-  SendCodeDto,
-  SendCodeResponseDto,
-  VerifyCodeDto,
-  VerifyCodeResponseDto,
-} from './dto/create-auth.dto';
+import { SendCodeDto, SendCodeResponseDto, VerifyCodeDto, VerifyCodeResponseDto } from './dto/create-auth.dto';
 import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
@@ -38,24 +26,16 @@ export class AuthController {
     description: 'Login realizado com sucesso.',
     type: VerifyCodeResponseDto,
   })
-  async verifyCode(
-    @Body() body: VerifyCodeDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    if (!body?.email || !body?.code)
-      throw new BadRequestException('Email e código são obrigatórios');
+  async verifyCode(@Body() body: VerifyCodeDto, @Res({ passthrough: true }) res: Response) {
+    if (!body?.email || !body?.code) throw new BadRequestException('Email e código são obrigatórios');
 
-    const { token, user } = await this.authService.verifyCode(
-      body.email,
-      body.code,
-    );
+    const { token, user } = await this.authService.verifyCode(body.email, body.code);
 
     const maxAge =
       Number(process.env.COOKIE_MAX_AGE_MS) ||
       (() => {
         const jwtExpires = process.env.JWT_EXPIRES_IN || '7d';
-        if (jwtExpires.endsWith('d'))
-          return parseInt(jwtExpires) * 24 * 60 * 60 * 1000;
+        if (jwtExpires.endsWith('d')) return parseInt(jwtExpires) * 24 * 60 * 60 * 1000;
         return 7 * 24 * 60 * 60 * 1000;
       })();
 

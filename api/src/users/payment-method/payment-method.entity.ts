@@ -39,10 +39,10 @@ export class PaymentMethod {
   @Column({ default: true })
   enabled: boolean;
 
-  @ManyToOne(() => User, (user) => user.paymentMethods, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, user => user.paymentMethods, { onDelete: 'CASCADE' })
   user: User;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.paymentMethod)
+  @OneToMany(() => Transaction, transaction => transaction.paymentMethod)
   transactions?: Transaction[];
 
   @CreateDateColumn({ type: 'timestamptz' })

@@ -1,6 +1,8 @@
 {
   "name": "app",
   "version": "0.1.0",
+  "description": "API do projeto Financa Facil",
+  "author": "VITOR-BRITO",
   "private": true,
   "scripts": {
     "dev": "next dev -p 1240",

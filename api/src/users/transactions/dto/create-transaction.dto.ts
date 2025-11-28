@@ -1,18 +1,5 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  IsUUID,
-  IsDateString,
-  IsBoolean,
-} from 'class-validator';
-import {
-  TransactionClass,
-  TransactionFrequency,
-  TransactionType,
-} from '../transactions.entity';
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID, IsDateString, IsBoolean } from 'class-validator';
+import { TransactionClass, TransactionFrequency, TransactionType } from '../transactions.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTransactionDto {

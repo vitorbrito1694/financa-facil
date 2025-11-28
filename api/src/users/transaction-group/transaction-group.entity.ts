@@ -23,7 +23,7 @@ export class TransactionGroup {
   @IsString()
   description: string;
 
-  @ManyToOne(() => User, (user) => user.transactionGroups, {
+  @ManyToOne(() => User, user => user.transactionGroups, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })

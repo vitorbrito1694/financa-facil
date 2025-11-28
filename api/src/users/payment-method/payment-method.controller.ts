@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, Request } from '@nestjs/common';
 import { PaymentMethodService } from './payment-method.service';
 import { PaymentMethod } from './payment-method.entity';
 import { AuthGuard } from '../../auth/auth.guard';
@@ -32,11 +22,7 @@ export class PaymentMethodController {
   }
 
   @Patch(':id')
-  update(
-    @Request() req,
-    @Param('id') id: string,
-    @Body() body: Partial<PaymentMethod>,
-  ) {
+  update(@Request() req, @Param('id') id: string, @Body() body: Partial<PaymentMethod>) {
     return this.svc.updateForUser(req.user.sub, id, body);
   }
 

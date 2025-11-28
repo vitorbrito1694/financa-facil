@@ -2,10 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Transaction } from './transactions.entity';
-import {
-  PaymentMethod,
-  PaymentMethodType,
-} from '../payment-method/payment-method.entity';
+import { PaymentMethod, PaymentMethodType } from '../payment-method/payment-method.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
@@ -19,14 +16,7 @@ export class TransactionsService {
   ) {}
 
   async create(userId: string, createTransactionDto: CreateTransactionDto) {
-    const {
-      installmentCount,
-      payment_method_id,
-      date,
-      paymentAt,
-      amount,
-      ...restOfDto
-    } = createTransactionDto;
+    const { installmentCount, payment_method_id, date, paymentAt, amount, ...restOfDto } = createTransactionDto;
 
     let transactionDate = new Date(date);
 
@@ -36,9 +26,7 @@ export class TransactionsService {
       });
 
       if (!paymentMethod) {
-        throw new NotFoundException(
-          `Payment method with ID ${payment_method_id} not found.`,
-        );
+        throw new NotFoundException(`Payment method with ID ${payment_method_id} not found.`);
       }
 
       if (
@@ -47,9 +35,7 @@ export class TransactionsService {
         paymentMethod.type !== PaymentMethodType.CREDIT_CARD &&
         paymentMethod.type !== PaymentMethodType.PIX
       ) {
-        throw new NotFoundException(
-          'Installments are only allowed for Credit Card and PIX payment methods.',
-        );
+        throw new NotFoundException('Installments are only allowed for Credit Card and PIX payment methods.');
       }
 
       if (
@@ -129,11 +115,7 @@ export class TransactionsService {
     return transaction;
   }
 
-  async update(
-    userId: string,
-    id: string,
-    updateTransactionDto: UpdateTransactionDto,
-  ) {
+  async update(userId: string, id: string, updateTransactionDto: UpdateTransactionDto) {
     const transaction = await this.findOne(userId, id);
     this.transactionRepository.merge(transaction, updateTransactionDto);
     return this.transactionRepository.save(transaction);

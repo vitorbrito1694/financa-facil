@@ -35,21 +35,21 @@ export class User {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 
-  @OneToOne(() => Profile, (profile) => profile.user, {
+  @OneToOne(() => Profile, profile => profile.user, {
     cascade: true,
     eager: false,
   })
   profile?: Profile;
 
-  @OneToMany(() => Account, (account) => account.owner)
+  @OneToMany(() => Account, account => account.owner)
   accounts?: Account[];
 
-  @OneToMany(() => PaymentMethod, (pm) => pm.user)
+  @OneToMany(() => PaymentMethod, pm => pm.user)
   paymentMethods?: PaymentMethod[];
 
-  @OneToMany(() => Transaction, (transaction) => transaction.user)
+  @OneToMany(() => Transaction, transaction => transaction.user)
   transactions?: Transaction[];
 
-  @OneToMany(() => TransactionGroup, (group) => group.user)
+  @OneToMany(() => TransactionGroup, group => group.user)
   transactionGroups?: TransactionGroup[];
 }

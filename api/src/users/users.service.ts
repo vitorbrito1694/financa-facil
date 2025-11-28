@@ -31,7 +31,7 @@ export class UsersService {
   }
 
   createIfNotExists(email: string) {
-    return this.findByEmail(email).then((u) => {
+    return this.findByEmail(email).then(u => {
       if (u) return u;
       const ent = this.usersRepo.create({ email });
       return this.usersRepo.save(ent);

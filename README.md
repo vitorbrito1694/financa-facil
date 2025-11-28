@@ -1,145 +1,57 @@
-**Finança Fácil**
+# Finança Fácil
 
-- **Descrição:**: Projeto backend + frontend para gerenciar finanças pessoais (contas, transações, autenticação por código por e‑mail). O backend usa NestJS + TypeORM + Postgres; o frontend (pasta `app`) é uma aplicação Next.js.
+**Descrição:** Projeto completo para gerenciamento de finanças pessoais. O sistema é composto por uma API robusta em NestJS e um Frontend moderno em Next.js.
 
-**Estrutura Geral**
+## Estrutura do Projeto
 
-- `api/`: backend NestJS
-  - `src/`: código fonte
-    - `main.ts`: bootstrap do Nest
-    - `app.module.ts`: módulo principal (TypeORM, módulos importados)
-    - `auth/`: autenticação por código (envio por e‑mail, verificação, emissão de cookie JWT)
-    - `users/`: módulo de usuários e perfis (`User`, `Profile`, `UsersService`, `UsersController`)
-    - `users/accounts/`: entidades e endpoints de `Account` (contas do usuário)
-    - `database/`: serviço e abstração para checagem de conexão/DB
-    - `accounts/` (compat layer): re‑exports para compatibilidade com import antigos
-  - `package.json`: scripts e dependências
-  - `.env` (local): variáveis de ambiente (DB, SMTP, JWT)
-- `app/`: frontend Next.js (layout, páginas, estilos)
-- `requests/`: coleções HTTP (ex.: `user.http`) para testes rápidos
+O repositório é dividido em duas partes principais:
 
-**Principais conceitos e decisões**
+- **[`api/`](./api)**: Backend construído com NestJS, TypeORM e PostgreSQL. Responsável pela lógica de negócios, autenticação e persistência de dados.
+- **[`app/`](./app)**: Frontend construído com Next.js e TailwindCSS. Interface do usuário para interação com o sistema.
 
-- Autenticação leve por e‑mail: gera código único, envia por SMTP (Brevo), verifica e emite JWT via cookie `auth` (httpOnly).
-- Inversão de dependência: controllers dependem de serviços/abreviações (ex.: `DatabaseService` via token). Facilita testes.
-- `Profile` separado de `User`: modelo `User` leve e `Profile` com campos opcionais (avatar, displayName, bio).
-- `Account` associada ao `User` (1:N) — contas são aninhadas sob rota REST `/users/:userId/accounts`.
-- Em desenvolvimento o TypeORM está configurado com `synchronize: true` para facilitar iterações rápidas. Em produção é obrigatório usar migrations.
+## Visão Geral da Arquitetura
 
-**Variáveis de ambiente (exemplo `api/.env`)**
+- **Autenticação**: Sistema "passwordless" via código por e-mail (SMTP) e JWT (HttpOnly Cookies).
+- **Banco de Dados**: PostgreSQL rodando via Docker.
+- **Design Pattern**: Inversão de dependência e separação clara de responsabilidades (Services, Controllers, Entities).
 
-```
-PGHOST=localhost
-PGPORT=5432
-PGUSER=postgres
-PGPASSWORD=senha
-PGDATABASE=postgres
+## Pré-requisitos
 
-SMTP_HOST=smtp.brevo.com
-SMTP_PORT=587
-SMTP_USER=apikey
-SMTP_PASS=<SUA_CHAVE_SMTP_BREVO>
-EMAIL_FROM=no-reply@seu-dominio.com
+- Node.js (v18+ recomendado)
+- Docker e Docker Compose (para o banco de dados)
 
-JWT_SECRET=uma_chave_secreta
-JWT_EXPIRES_IN=7d
-COOKIE_MAX_AGE_MS=604800000
-PORT=3000
-```
+## Como Rodar o Projeto
 
-**Como rodar (desenvolvimento)**
+Para instruções detalhadas, consulte os READMEs específicos de cada módulo:
 
-- Backend:
+- [Guia de Configuração da API](./api/README.md)
+- [Guia de Configuração do App (Frontend)](./app/README.md)
 
-```cmd
-cd api
-npm install
-npm run start:dev
-```
+### Resumo Rápido
 
-- Frontend (Next.js):
+1. **Subir o Banco de Dados**:
 
-```cmd
-cd app
-npm install
-npm run dev
-```
+   ```bash
+   cd api/docker
+   docker compose up -d
+   ```
 
-**Rotas úteis (resumo)**
+2. **Rodar a API**:
 
-- `GET /db-test` — testa conexão com o Postgres
-- `POST /auth/send-code` — enviar código de verificação por e‑mail
-- `POST /auth/verify-code` — verificar código; em caso de sucesso retorna cookie `auth`
-- `GET /users/:id` — obter usuário (inclui `profile` e `accounts`)
-- `GET /users/by-email?email=...` — buscar usuário por email
-- `PATCH /users/:id/profile` — atualizar perfil
-- `PATCH /users/:id/status` — ativar/inativar ou setar admin
-- `POST /users/:userId/accounts` — criar conta para usuário
+   ```bash
+   cd api
+   npm install
+   npm run start:dev
+   ```
 
-**Notas e próximos passos recomendados**
+3. **Rodar o Frontend**:
+   ```bash
+   cd app
+   npm install
+   npm run dev
+   ```
+   O frontend estará disponível em `http://localhost:1240`.
 
-- Substituir `synchronize: true` por migrations e gerar migrações com TypeORM antes de deploy.
-- Adicionar validação (`class-validator`) e DTOs nas rotas públicas.
-- Adicionar rate limiting nas rotas de envio de código e proteções contra abuso.
-- Armazenar códigos de verificação hashed (bcrypt) para segurança adicional.
-- Implementar testes unitários e e2e para fluxos críticos (auth, accounts).
-  Se quiser, eu posso:
+## Contribuição
 
-- gerar migrations para o esquema atual,
-- adicionar DTOs/validações para os endpoints de usuário e accounts,
-- criar um script `npm run db:reset` para desenvolvimento.
-
-**Docker - Postgres Local**
-
-- **Pasta/configuração**: criei a pasta `docker/` com os arquivos `docker/docker-compose.yml`, `docker/.env` e `docker/init.sql`.
-- **O que os arquivos fazem**: `docker-compose.yml` sobe um serviço `db` baseado na imagem oficial do Postgres; `.env` define usuário, senha e nome do banco;
-
-- **Local atual da configuração (API)**: a configuração do Postgres está em `api/docker/` — arquivos principais:
-
-  - `api/docker/docker-compose.yml` (compose do serviço Postgres)
-  - `api/docker/.env` (variáveis de ambiente lidas pelo Compose)
-
-- **O que os arquivos fazem**: o `docker-compose.yml` sobe um serviço `db` baseado na imagem oficial do Postgres; o `.env` define usuário, senha e nome do banco; o serviço usa `container_name: financa-facil-db` e monta o volume `pg_data`.
-
-- **Subir o banco (terminal do VSCode ou PowerShell/cmd.exe)**: opções:
-
-- Entrar no diretório e subir:
-
-```cmd
-cd api\docker
-docker compose up -d
-```
-
-- Ou rodar sem mudar de diretório:
-
-```cmd
-docker compose -f api\docker\docker-compose.yml --env-file api\docker\.env up -d --build
-```
-
-- **Parar e remover containers/volumes**:
-
-```cmd
-docker compose -f api\docker\docker-compose.yml down -v
-```
-
-- **Ver logs do banco**:
-
-```cmd
-docker compose -f api\docker\docker-compose.yml logs -f db
-```
-
-- **Conectar ao banco**: configure seu cliente (pgAdmin, DBeaver, DataGrip, ou o próprio app) com:
-
-  - **Host**: `localhost`
-  - **Porta**: `5432`
-  - **Database**: `financas_db` (definido em `api/docker/.env`)
-  - **User**: `postgres`
-  - **Password**: `Ma842684`
-
-- **Via VSCode (Docker extension)**: abra a aba _Docker_, localize `Compose` ou o arquivo `docker-compose.yml`, clique com o botão direito e escolha _Compose Up_ para subir o serviço e _Compose Down_ para parar.
-
-- **Validação rápida**: após subir, rode `docker ps` para confirmar que o container `db` está rodando e acesse `docker compose -f docker/docker-compose.yml logs db` para ver a inicialização. A tabela de exemplo `exemplo` será criada automaticamente na primeira inicialização pelo `init.sql`.
-
-  - Observação: o `docker-compose.yml` em `api/docker` utiliza `container_name: financa-facil-db` e monta o volume local `api/docker/pg_data` para persistência.
-
-Se quiser, eu também posso adicionar um script npm (ex.: `npm run db:up` / `db:down`) no `api/package.json` para facilitar os comandos.
+Sinta-se à vontade para abrir issues ou pull requests.

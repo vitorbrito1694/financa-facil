@@ -1,8 +1,8 @@
 {
   "name": "api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "API do projeto Financa Facil",
+  "author": "VITOR-BRITO",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

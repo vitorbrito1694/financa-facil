@@ -1,12 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  Index,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, Index } from 'typeorm';
 import { User } from '../user.entity';
 
 export enum AccountType {
@@ -37,7 +29,7 @@ export class Account {
   @Column({ default: 'BRL' })
   currency?: string;
 
-  @ManyToOne(() => User, (user) => user.accounts, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, user => user.accounts, { onDelete: 'CASCADE' })
   owner?: User;
 
   @CreateDateColumn({ type: 'timestamptz' })

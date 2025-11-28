@@ -23,7 +23,7 @@ import { AccountsController } from './accounts/accounts.controller';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Profile, PaymentMethod, Transaction, TransactionGroup, Account]),
-    JwtModule
+    JwtModule,
   ],
   providers: [
     ProfileService,

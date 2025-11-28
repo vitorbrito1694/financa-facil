@@ -1,9 +1,6 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
-import {
-  IDatabaseService,
-  DATABASE_SERVICE,
-} from './database/database.interface';
+import { IDatabaseService, DATABASE_SERVICE } from './database/database.interface';
 
 @Controller()
 export class AppController {

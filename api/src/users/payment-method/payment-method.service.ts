@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  ConflictException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PaymentMethod, PaymentMethodType } from './payment-method.entity';
@@ -38,9 +33,7 @@ export class PaymentMethodService {
       const paymentAt = (data as any)?.paymentAt;
       const closingAt = (data as any)?.closingAt;
       if (!paymentAt || !closingAt)
-        throw new BadRequestException(
-          'Payment method with type CREDIT_CARD must have paymentAt and closingAt',
-        );
+        throw new BadRequestException('Payment method with type CREDIT_CARD must have paymentAt and closingAt');
     }
 
     const ent = this.paymentMethodRepo.create({
@@ -62,11 +55,7 @@ export class PaymentMethodService {
     });
   }
 
-  async updateForUser(
-    userId: string,
-    id: string,
-    data: Partial<PaymentMethod>,
-  ) {
+  async updateForUser(userId: string, id: string, data: Partial<PaymentMethod>) {
     const pm = await this.findOneForUser(userId, id);
     if (!pm) throw new NotFoundException('Payment method not found');
     const newName = (data as any)?.name;
@@ -75,9 +64,7 @@ export class PaymentMethodService {
         where: { name: newName, user: { id: userId } as any },
       });
       if (existing && existing.id !== pm.id)
-        throw new ConflictException(
-          `Payment method with name ${newName} already exists for user ${userId}`,
-        );
+        throw new ConflictException(`Payment method with name ${newName} already exists for user ${userId}`);
     }
 
     Object.assign(pm, data);

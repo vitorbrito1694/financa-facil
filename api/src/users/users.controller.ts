@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Body,
-  NotFoundException,
-} from '@nestjs/common';
+import { Controller, Get, Param, Patch, Body, NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { EmailValidationPipe } from '../common/pipes/email-validation.pipe';
 
@@ -24,21 +17,16 @@ export class UsersController {
   }
 
   @Patch(':id/status')
-  setStatus(
-    @Param('id') id: string,
-    @Body() body: { active?: boolean; admin?: boolean },
-  ) {
+  setStatus(@Param('id') id: string, @Body() body: { active?: boolean; admin?: boolean }) {
     const promises = [] as Promise<any>[];
-    if (body.active !== undefined)
-      promises.push(this.userService.setActive(id, body.active));
-    if (body.admin !== undefined)
-      promises.push(this.userService.setAdmin(id, body.admin));
+    if (body.active !== undefined) promises.push(this.userService.setActive(id, body.active));
+    if (body.admin !== undefined) promises.push(this.userService.setAdmin(id, body.admin));
     if (promises.length === 0) {
       return { success: false, message: 'No update fields provided' };
     }
 
     return Promise.all(promises)
-      .then((results) => ({ success: true, results }))
-      .catch((err) => ({ success: false, error: err?.message ?? String(err) }));
+      .then(results => ({ success: true, results }))
+      .catch(err => ({ success: false, error: err?.message ?? String(err) }));
   }
 }

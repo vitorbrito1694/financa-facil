@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { TransactionGroupService } from './transaction-group.service';
 import { CreateTransactionGroupDto } from './dto/create-transaction-group.dto';
 import { UpdateTransactionGroupDto } from './dto/update-transaction-group.dto';
@@ -21,19 +11,11 @@ import { AuthGuard } from '../../auth/auth.guard';
 @UseGuards(AuthGuard)
 @Controller('users/transaction-groups')
 export class TransactionGroupController {
-  constructor(
-    private readonly transactionGroupService: TransactionGroupService,
-  ) {}
+  constructor(private readonly transactionGroupService: TransactionGroupService) {}
 
   @Post()
-  create(
-    @Request() req,
-    @Body() createTransactionGroupDto: CreateTransactionGroupDto,
-  ) {
-    return this.transactionGroupService.create(
-      req.user.sub,
-      createTransactionGroupDto,
-    );
+  create(@Request() req, @Body() createTransactionGroupDto: CreateTransactionGroupDto) {
+    return this.transactionGroupService.create(req.user.sub, createTransactionGroupDto);
   }
 
   @Get()
@@ -47,16 +29,8 @@ export class TransactionGroupController {
   }
 
   @Patch(':id')
-  update(
-    @Request() req,
-    @Param('id') id: string,
-    @Body() updateTransactionGroupDto: UpdateTransactionGroupDto,
-  ) {
-    return this.transactionGroupService.update(
-      id,
-      req.user.sub,
-      updateTransactionGroupDto,
-    );
+  update(@Request() req, @Param('id') id: string, @Body() updateTransactionGroupDto: UpdateTransactionGroupDto) {
+    return this.transactionGroupService.update(id, req.user.sub, updateTransactionGroupDto);
   }
 
   @Delete(':id')

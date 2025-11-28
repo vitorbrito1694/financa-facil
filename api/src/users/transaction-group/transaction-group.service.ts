@@ -12,10 +12,7 @@ export class TransactionGroupService {
     private readonly transactionGroupRepository: Repository<TransactionGroup>,
   ) {}
 
-  async create(
-    userId: string,
-    createTransactionGroupDto: CreateTransactionGroupDto,
-  ): Promise<TransactionGroup> {
+  async create(userId: string, createTransactionGroupDto: CreateTransactionGroupDto): Promise<TransactionGroup> {
     const transactionGroup = this.transactionGroupRepository.create({
       ...createTransactionGroupDto,
       userId,
