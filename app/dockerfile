@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # 2. Diretório de trabalho
-WORKDIR /src
+WORKDIR /app
 
 # 3. Copiar dependências
 COPY package*.json ./

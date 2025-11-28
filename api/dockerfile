@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # 2. Definir o diretório de trabalho dentro do container
-WORKDIR /src
+WORKDIR /api
 
 # 3. Copiar os arquivos de dependências
 COPY package*.json ./
