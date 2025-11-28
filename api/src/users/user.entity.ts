@@ -11,7 +11,7 @@ import {
 import { Profile } from './profile/profile.entity';
 import { Account } from './accounts/account.entity';
 import { PaymentMethod } from './payment-method/payment-method.entity';
-import { Transaction } from './transactions/transaction.entity';
+import { Transaction } from './transactions/transactions.entity';
 import { TransactionGroup } from './transaction-group/transaction-group.entity';
 
 @Entity('users')

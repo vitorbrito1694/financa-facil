@@ -12,7 +12,7 @@ import {
   TransactionClass,
   TransactionFrequency,
   TransactionType,
-} from '../transaction.entity';
+} from '../transactions.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTransactionDto {

@@ -10,7 +10,7 @@ import { PaymentMethodService } from './payment-method/payment-method.service';
 import { Profile } from './profile/profile.entity';
 import { ProfileController } from './profile/profile.controller';
 import { ProfileService } from './profile/profile.service';
-import { Transaction } from './transactions/transaction.entity';
+import { Transaction } from './transactions/transactions.entity';
 import { TransactionsService } from './transactions/transactions.service';
 import { TransactionsController } from './transactions/transactions.controller';
 import { TransactionGroup } from './transaction-group/transaction-group.entity';

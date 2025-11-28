@@ -9,7 +9,7 @@ import {
   Index,
 } from 'typeorm';
 import { User } from '../user.entity';
-import { Transaction } from '../transactions/transaction.entity';
+import { Transaction } from '../transactions/transactions.entity';
 
 export enum PaymentMethodType {
   CREDIT_CARD = 'CREDIT_CARD',
