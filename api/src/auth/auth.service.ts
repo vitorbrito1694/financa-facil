@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VerificationCode } from './verification-code.entity';
 import { User } from '../users/user.entity';
+import { UserSeedingService } from '../users/user-seeding.service';
 import { EmailService } from './email.service';
 import { randomInt } from 'crypto';
 import { JwtService } from '@nestjs/jwt';
@@ -18,6 +19,7 @@ export class AuthService {
     private usersRepo: Repository<User>,
     private emailService: EmailService,
     private jwtService: JwtService,
+    private userSeedingService: UserSeedingService,
   ) {}
 
   private generateCode(): string {
@@ -54,6 +56,7 @@ export class AuthService {
     if (!user) {
       user = this.usersRepo.create({ email });
       user = await this.usersRepo.save(user);
+      await this.userSeedingService.seed(user);
     }
 
     const payload = { sub: user.id, email: user.email };

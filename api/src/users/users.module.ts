@@ -19,10 +19,18 @@ import { TransactionGroupController } from './transaction-group/transaction-grou
 import { Account } from './accounts/account.entity';
 import { AccountsService } from './accounts/accounts.service';
 import { AccountsController } from './accounts/accounts.controller';
+import { UserSeedingService } from './user-seeding.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Profile, PaymentMethod, Transaction, TransactionGroup, Account]),
+    TypeOrmModule.forFeature([
+      User,
+      Profile,
+      PaymentMethod,
+      Transaction,
+      TransactionGroup,
+      Account,
+    ]),
     JwtModule,
   ],
   providers: [
@@ -32,6 +40,7 @@ import { AccountsController } from './accounts/accounts.controller';
     TransactionGroupService,
     AccountsService,
     UsersService,
+    UserSeedingService,
   ],
   controllers: [
     ProfileController,
@@ -43,7 +52,15 @@ import { AccountsController } from './accounts/accounts.controller';
   ],
   exports: [
     UsersService,
-    TypeOrmModule.forFeature([User, Profile, PaymentMethod, Transaction, TransactionGroup, Account]),
+    UserSeedingService,
+    TypeOrmModule.forFeature([
+      User,
+      Profile,
+      PaymentMethod,
+      Transaction,
+      TransactionGroup,
+      Account,
+    ]),
   ],
 })
 export class UsersModule {}
