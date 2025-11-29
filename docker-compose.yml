@@ -13,7 +13,7 @@ services:
   # --- Serviço do Backend (NestJS) ---
   backend:
     build:
-      context: ./api # Aponta para a pasta da API
+      context: ./api
       dockerfile: Dockerfile
     container_name: financa-facil-api
     ports:
@@ -25,6 +25,9 @@ services:
     environment:
       POSTGRES_HOST: financa-facil-db
       POSTGRES_PORT: 5432
+    volumes:
+      - ./api:/api
+      - ./api/node_modules:/api/node_modules
 
   # --- Serviço do Frontend (Next.js) ---
   frontend:
@@ -40,6 +43,10 @@ services:
       - ./app/.env.local
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:1239
+    volumes:
+      - ./app:/app
+      - ./app/node_modules:/app/node_modules
+      - ./app/.next:/app/.next
 
 volumes:
   pg_data:
