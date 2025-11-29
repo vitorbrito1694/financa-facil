@@ -25,6 +25,10 @@ services:
     environment:
       POSTGRES_HOST: financa-facil-db
       POSTGRES_PORT: 5432
+    volumes:
+      - ./api:/api
+      - /api/node_modules
+    command: npm run start:dev
 
   # --- Serviço do Frontend (Next.js) ---
   frontend:
@@ -40,6 +44,10 @@ services:
       - ./app/.env.local
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:1239
-
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
 volumes:
   pg_data:
