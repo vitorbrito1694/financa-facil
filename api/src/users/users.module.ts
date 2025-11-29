@@ -20,20 +20,17 @@ import { Account } from './accounts/account.entity';
 import { AccountsService } from './accounts/accounts.service';
 import { AccountsController } from './accounts/accounts.controller';
 import { UserSeedingService } from './user-seeding.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { AdminGuard } from '../auth/admin.guard';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      User,
-      Profile,
-      PaymentMethod,
-      Transaction,
-      TransactionGroup,
-      Account,
-    ]),
+    TypeOrmModule.forFeature([User, Profile, PaymentMethod, Transaction, TransactionGroup, Account]),
     JwtModule,
   ],
   providers: [
+    AuthGuard,
+    AdminGuard,
     ProfileService,
     PaymentMethodService,
     TransactionsService,
@@ -53,14 +50,7 @@ import { UserSeedingService } from './user-seeding.service';
   exports: [
     UsersService,
     UserSeedingService,
-    TypeOrmModule.forFeature([
-      User,
-      Profile,
-      PaymentMethod,
-      Transaction,
-      TransactionGroup,
-      Account,
-    ]),
+    TypeOrmModule.forFeature([User, Profile, PaymentMethod, Transaction, TransactionGroup, Account]),
   ],
 })
 export class UsersModule {}
