@@ -3,56 +3,56 @@ import { TransactionClass, TransactionFrequency, TransactionType } from '../tran
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTransactionDto {
-  @ApiProperty({ example: 100 })
+  @ApiProperty({ example: 150.0 })
   @IsNumber()
   @IsNotEmpty()
   amount: number;
 
-  @ApiProperty({ example: '2025-11-24' })
+  @ApiProperty({ example: '2023-10-27T10:00:00Z' })
   @IsDateString()
   @IsNotEmpty()
   date: string;
 
-  @ApiProperty({ example: '2025-11-24' })
+  @ApiProperty({ example: '2023-10-27T10:00:00Z', required: false })
   @IsDateString()
-  @IsNotEmpty()
-  paymentAt: string;
+  @IsOptional()
+  paymentAt?: string;
 
-  @ApiProperty({ example: 'EXPENSE' })
+  @ApiProperty({ example: 'EXPENSE', enum: TransactionType })
   @IsEnum(TransactionType)
   @IsNotEmpty()
   type: TransactionType;
 
-  @ApiProperty({ example: 'FIXED' })
+  @ApiProperty({ example: 'FIXED', enum: TransactionFrequency })
   @IsEnum(TransactionFrequency)
   @IsNotEmpty()
   frequency: TransactionFrequency;
 
-  @ApiProperty({ example: 'ESSENTIAL' })
+  @ApiProperty({ example: 'ESSENTIAL', enum: TransactionClass })
   @IsEnum(TransactionClass)
   @IsNotEmpty()
   class: TransactionClass;
 
-  @ApiProperty({ example: false })
+  @ApiProperty({ example: false, required: false })
   @IsBoolean()
   @IsOptional()
   note?: boolean;
 
-  @ApiProperty({ example: 'Descrição da transação' })
+  @ApiProperty({ example: 'Grocery shopping', required: false })
   @IsString()
   @IsOptional()
   description?: string;
 
-  @ApiProperty({ example: 'uuid-do-metodo-de-pagamento' })
+  @ApiProperty({ example: '34efd581-f495-4012-a971-a2a14008592b' })
   @IsUUID()
   payment_method_id: string;
 
-  @ApiProperty({ example: 1 })
+  @ApiProperty({ example: 1, required: false })
   @IsNumber()
   @IsOptional()
   installmentCount?: number;
 
-  @ApiProperty({ example: 1 })
+  @ApiProperty({ example: 1, required: false })
   @IsNumber()
   @IsOptional()
   installmentNumber?: number;
