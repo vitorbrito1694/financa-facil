@@ -8,7 +8,7 @@ import { Footer } from '@/features/home/footer-section';
 export default function Home() {
   return (
     <>
-      <section className="w-full flex justify-center bg-primary-foreground p-4 md:p-16">
+      <section className="w-full flex justify-center bg-primary-foreground ">
         <div className="container text-center">
           <div className="mx-auto flex max-w-screen-lg flex-col gap-6">
             <h1 className="text-3xl font-extrabold lg:text-6xl">Gerencie Seu Dinheiro com Precisao e Tranquilidade</h1>

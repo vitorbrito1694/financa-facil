@@ -14,9 +14,9 @@ export function Logo({ className, showText = false }: LogoProps) {
         <Image
           src="/icons/financa-facil-logo.svg"
           alt="Finança Fácil Logo"
-          width={150}
-          height={50}
-          className={cn('hidden xl:block w-auto', className)}
+          width={120}
+          height={40}
+          className={cn('hidden xl:block', className)}
           priority
         />
         {showText && <span className="font-semibold text-xl">Finança Fácil</span>}
