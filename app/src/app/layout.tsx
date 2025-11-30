@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@/components/theme-provider';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -21,8 +22,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.className} antialiased`}>
-        <Navbar />
-        <div className="pt-[calc(2rem+80px)] px-4 pb-8">{children}</div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navbar />
+          <div className="pt-[calc(2rem+80px)] px-4 pb-8 bg-primary-foreground">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );
