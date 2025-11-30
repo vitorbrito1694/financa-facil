@@ -1,74 +1,41 @@
 'use client';
 
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useState } from 'react';
+import { useFormState } from 'react-dom';
+import { useTransition } from 'react';
+import { loginAction } from './actions';
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [state, formAction] = useFormState(loginAction, { error: '' });
+  const [isPending, startTransition] = useTransition();
 
-  const onSubmit: any = async (data: any) => {
-    try {
-      setIsLoading(true);
-      const formData = new FormData();
-      formData.append('email', data.email);
-      formData.append('password', data.password);
-      // await signInWithEmail(formData);
-    } catch (error) {
-      console.error('Login error:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    try {
-      setIsLoading(true);
-      // await signInWithGoogle();
-    } catch (error) {
-      console.error('Google sign in error:', error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleSubmit = (formData: FormData) => {
+    startTransition(() => {
+      formAction(formData);
+    });
   };
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className={cn('flex flex-col justify-center', className)} {...props}>
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Entrar</CardTitle>
-          <CardDescription>Insira Email e senha para acessar sua conta</CardDescription>
+          <CardDescription>Insira seu Email e receba um código por e-mail para entrar</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={onSubmit}>
+          <form action={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" name="email" placeholder="meuemail@exemplo.com" required />
               </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Senha</Label>
-                  <a href="/reset" className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
-                    Esqueçeu sua senha?
-                  </a>
-                </div>
-                <Input id="password" type="password" name="password" required />
-              </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Entrando...' : 'Entrar'}
+              {state?.error && <p className="text-sm text-destructive ">{state.error}</p>}
+              <Button type="submit" variant="default" className="w-full" disabled={isPending}>
+                {isPending ? 'Entrando...' : 'Entrar'}
               </Button>
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={handleGoogleSignIn}
-                disabled={isLoading}
-              >
+              <Button type="button" variant="outline" className="w-full" disabled>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 48 48" className="mr-2">
                   <path
                     fill="#FFC107"
@@ -87,14 +54,8 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                     d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"
                   />
                 </svg>
-                {isLoading ? 'Entrando...' : 'Entrar com Google'}
+                Em breve
               </Button>
-            </div>
-            <div className="mt-4 text-center text-sm">
-              Não tem uma conta?{' '}
-              <Link href="/signup" className="underline underline-offset-4">
-                Cadastrar-se
-              </Link>
             </div>
           </form>
         </CardContent>

@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
-          <div className="pt-[calc(2rem+80px)] px-4 pb-8 bg-primary-foreground">{children}</div>
+          <div className="bg-primary-foreground">{children}</div>
         </ThemeProvider>
       </body>
     </html>
