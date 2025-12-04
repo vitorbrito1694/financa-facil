@@ -1,11 +1,13 @@
 # 1. Usar uma imagem base do Node.js
-FROM node:18-alpine
+FROM node:22.21.1-alpine AS builder
 
 # 2. Definir o diretório de trabalho dentro do container
 WORKDIR /api
 
 # 3. Copiar os arquivos de dependências
 COPY package*.json ./
+# COPY node_modules ./node_modules
+# RUN rm -rf node_modules package-lock.json
 
 # 4. Instalar as dependências
 RUN npm install
