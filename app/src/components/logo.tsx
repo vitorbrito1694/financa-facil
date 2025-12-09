@@ -4,23 +4,23 @@ import Link from 'next/link';
 
 interface LogoProps {
   className?: string;
-  showText?: boolean;
 }
 
-export function Logo({ className, showText = false }: LogoProps) {
+export function Logo({ className }: LogoProps) {
   return (
     <Link href="/">
-      <div className="flex items-center gap-2">
-        <Image
-          src="/icons/financa-facil-logo.svg"
-          alt="Finança Fácil Logo"
-          width={120}
-          height={40}
-          className={cn('hidden xl:block', className)}
-          priority
-        />
-        {showText && <span className="font-semibold text-xl">Finança Fácil</span>}
-      </div>
+      <Image
+        src="/icons/financa-facil-logo.svg"
+        alt="Finança Fácil Logo"
+        width={120}
+        height={40}
+        className={cn('hidden xl:block', className)}
+        priority
+        style={{
+          width: '100%',
+          height: '50px',
+        }}
+      />
     </Link>
   );
 }
