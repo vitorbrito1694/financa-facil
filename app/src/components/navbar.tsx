@@ -7,7 +7,7 @@ export function Navbar() {
 
   return (
     <div className="flex justify-center">
-      <header className="fixed top-6 z-50 container rounded-full border-b bg-background/70 backdrop-blur-md flex items-center justify-center px-8 w-[90%] md:w-full">
+      <header className="fixed top-6 z-50 container rounded-full border-b border-foreground/10 bg-background/70 backdrop-blur-md flex items-center justify-center px-8 w-[90%] md:w-full">
         <div className="container flex h-16 items-center justify-between w-full gap-4">
           <Logo className="flex" />
           <NavbarClient isAuthenticated={isAuthenticated} />

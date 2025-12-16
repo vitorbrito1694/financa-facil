@@ -27,6 +27,8 @@ services:
       POSTGRES_PORT: 5432
     volumes:
       - ./api:/api
+      - /api/node_modules
+      - /api/.dist
 
   # --- Serviço do Frontend (Next.js) ---
   frontend:
@@ -44,6 +46,8 @@ services:
       NEXT_PUBLIC_API_URL: http://localhost:1239
     volumes:
       - ./app:/app
+      - /app/node_modules
+      - /app/.next
 
 volumes:
   pg_data:

@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { logoutAction } from '@/features/auth/actions';
 import { cn } from '@/lib/utils';
+import { ModeToggle } from './theme-toogle';
 
 interface NavbarClientProps {
   isAuthenticated: boolean;
@@ -95,6 +96,7 @@ export function NavbarClient({ isAuthenticated }: NavbarClientProps) {
             <Button asChild>
               <Link href="/dashboard">Dashboard</Link>
             </Button>
+            <ModeToggle />
           </>
         ) : (
           <>
